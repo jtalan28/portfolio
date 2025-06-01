@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Me - Jesha Mae Talan</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>Jesha Mae Talan</h1>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" class="active">About Me</a></li>
+        <li><a href="photos.html.html">Photos</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    About Me
+  </section>
+
+  <section>
+    <h2>Hi! I'm Jesha Mae Talan</h2>
+    <img src="myphoto.jpg.jpg" alt="Jesha Mae Talan" class="profile-photo" />
+    <p><strong>Year Level:</strong> 3rd Year in Bachelor of Science in Information Technology</p>
+    <p><strong>Skills:</strong> Multimedia Editor</p>
+    <ul>
+      <li>Former Creative Manager of Community of Data Engineers organization</li>
+      <li>Former President of Supreme Student Government, Anselmo A. Sandoval Memorial National High School</li>
+      <li>First student allowed to wear civilian attire every Thursday at AASMNH</li>
+      <li>Ran for SK in the barangay</li>
+    </ul>
+  </section>
+
+  <footer>
+    © 2025 Jesha Mae Talan
+  </footer>
+
+  <!-- Decorative Floating Elements -->
+  <div class="decor cloud"></div>
+  <div class="decor sun"></div>
+  <div class="decor heart"></div>
+  <div class="decor butterfly"></div>
+  <div class="decor flower"></div>
+  <div class="decor shape"></div>
+  <div class="decor star"></div>
+
+  <script>
+    function buttonTapAnimation(button) {
+      button.classList.add('active');
+      setTimeout(() => button.classList.remove('active'), 300);
+    }
+  </script>
+</body>
+</html>

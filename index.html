@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home - Jesha Mae Talan Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>Jesha Mae Talan</h1>
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="photos.html.html">Photos</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    Welcome to my portfolio!
+  </section>
+
+  <section>
+    <h2>Welcome!</h2>
+    <p>Hi, I'm Jesha!
+Welcome to my personal website. I'm passionate about photography and editing. I love writing, reading, learning, and sharing what I know. Here, you'll find more about me and my interest in life. Thanks for visiting!</p>
+    <button onclick="buttonTapAnimation(this)">Explore More</button>
+  </section>
+
+  <footer>
+    © 2025 Jesha Mae Talan
+  </footer>
+
+  <!-- Decorative Floating Elements -->
+  <div class="decor cloud"></div>
+  <div class="decor sun"></div>
+  <div class="decor heart"></div>
+  <div class="decor butterfly"></div>
+  <div class="decor flower"></div>
+  <div class="decor shape"></div>
+  <div class="decor star"></div>
+
+  <script>
+    function buttonTapAnimation(button) {
+      button.classList.add('active');
+      setTimeout(() => button.classList.remove('active'), 300);
+    }
+  </script>
+</body>
+</html>
