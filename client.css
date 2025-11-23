@@ -1,0 +1,321 @@
+/* client.css - FINAL 2025 VERSION (Perfect & Unbreakable) */
+:root {
+    --primary: #0077b6;
+    --secondary: #00b4d8;
+    --light: #f8fdff;
+    --gray: #666;
+    --border: #ddd;
+    --shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    background: white;
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 460px;
+    text-align: center;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    color: var(--primary);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+h2 {
+    color: #444;
+    font-size: 1.5rem;
+    margin-bottom: 1.8rem;
+    font-weight: 600;
+}
+
+.subtitle {
+    margin: -10px 0 24px;
+    color: #666;
+    font-size: 0.98em;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 1.2rem;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="datetime-local"],
+select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1.8px solid var(--border);
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: #fcfcfc;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(0, 119, 182, 0.15);
+}
+
+/* Password Wrapper & Eye Toggle */
+.password-wrapper {
+    position: relative;
+    display: block;
+}
+
+.password-wrapper input {
+    padding-right: 50px !important;   /* Critical: space for eye icon */
+}
+
+.eye-toggle {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 1.25rem;
+    z-index: 10;
+    transition: color 0.2s;
+}
+
+.eye-toggle:hover {
+    color: var(--primary);
+}
+
+/* Custom Checkbox */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    font-size: 0.94em;
+    color: #444;
+    cursor: pointer;
+    user-select: none;
+    margin: 16px 0;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    margin-right: 10px;
+    position: relative;
+    transition: all 0.25s;
+    flex-shrink: 0;
+}
+
+#terms:checked ~ .checkmark {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+#terms:checked ~ .checkmark::after {
+    content: '✓';
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Buttons */
+button,
+.btn-primary {
+    width: 100%;
+    padding: 15px;
+    margin: 12px 0;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover,
+.btn-primary:hover {
+    background: #00609b;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 119, 182, 0.3);
+}
+
+button:disabled,
+.btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Loading State */
+.btn-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-loading i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Links */
+.switch-link {
+    margin-top: 24px;
+    display: block;
+    color: var(--primary);
+    font-size: 0.98rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.switch-link:hover {
+    text-decoration: underline;
+}
+
+/* Price Display */
+.price-display {
+    background: #e0faff;
+    color: var(--primary);
+    padding: 18px;
+    border-radius: 12px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 20px 0;
+    border: 2px dashed var(--secondary);
+}
+
+/* Booking Status List */
+#booking-status-section {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    margin: 20px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.booking-status-list {
+    max-height: 420px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    background: #fdfdfd;
+}
+
+.booking-status-item {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    background: white;
+    transition: background 0.2s;
+}
+
+.booking-status-item:hover {
+    background: #f8fbff;
+}
+
+.booking-status-item:last-child {
+    border-bottom: none;
+}
+
+.status-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+    font-style: italic;
+    font-size: 1.05em;
+}
+
+/* Custom Scrollbar */
+.booking-status-list::-webkit-scrollbar {
+    width: 9px;
+}
+.booking-status-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.booking-status-list::-webkit-scrollbar-thumb {
+    background: #b0b0b0;
+    border-radius: 10px;
+}
+.booking-status-list::-webkit-scrollbar-thumb:hover {
+    background: #909090;
+}
+
+/* Hidden */
+.hidden {
+    display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .container {
+        padding: 2rem 1.2rem;
+        margin: 10px;
+        border-radius: 14px;
+    }
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.4rem; }
+    input, button { font-size: 1rem; }
+}
+

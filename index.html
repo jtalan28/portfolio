@@ -1,53 +1,382 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Home - Jesha Mae Talan Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Pelagic Beach Resort — Demo</title>
+
+
+    <!-- ITO ANG KULANG MO BRO!!! -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" 
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    :root{--accent:#0b7db0;--muted:#666;--bg:#f9f9fb;--card:#fff}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;line-height:1.4;margin:0;background:var(--bg);color:#222}
+    header{background:#fff;border-bottom:1px solid #e6e6e9;position:sticky;top:0;z-index:40}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{height:34px}
+    nav ul{display:flex;gap:18px;list-style:none;padding:0;margin:0;color:var(--muted)}
+    nav a{color:inherit;text-decoration:none;font-weight:600}
+
+    /* Hero */
+    .hero{position:relative}
+    .hero img{width:100%;height:360px;object-fit:cover;display:block;filter:brightness(0.55)}
+    .hero .overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:40px;color:#fff}
+    .hero h1{margin:0;font-size:28px;letter-spacing:0.2px}
+    .hero p.lead{margin:8px 0 0;font-size:15px;opacity:0.95}
+
+    /* Content sections */
+    section{padding:42px 0}
+    h2{font-size:20px;margin:0 0 12px}
+    .lead-text{color:var(--muted);max-width:840px}
+
+    .flex{display:flex;gap:28px}
+    .grid{display:grid;gap:20px}
+
+    /* About + features */
+    .about{display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start}
+    .features{background:var(--card);padding:18px;border-radius:8px;border:1px solid #eee}
+    .feature-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    .feat{font-size:14px;color:var(--muted)}
+
+    /* Rooms grid */
+    .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+    .card{background:var(--card);border:1px solid #e9e9ed;padding:12px;border-radius:8px}
+    .card img{width:100%;height:120px;object-fit:cover;border-radius:6px}
+    .card h3{font-size:15px;margin:8px 0}
+    .price{font-weight:700;color:var(--accent)}
+    .btn{display:inline-block;padding:8px 12px;background:var(--accent);color:#fff;border-radius:6px;text-decoration:none;font-weight:700}
+
+    /* Footer/contact */
+    footer{padding:30px 0;background:#fff;border-top:1px solid #e6e6e9}
+    .contact-grid{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* Responsive */
+@media (max-width:880px){
+  .about{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .hero img{height:260px}
+}
+  /* Base styles para sa user menu */
+  #user-menu-item {
+    position: relative;
+    margin-left: 20px; /* space from other nav items */
+  }
+
+  #user-icon-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  #user-icon-link:hover {
+    background: #f0f8ff;
+    color: #0b7db0;
+  }
+
+  #user-name-display {
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  /* DROPDOWN MENU */
+  #user-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 14px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+    min-width: 240px;
+    overflow: hidden;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.25s ease;
+  }
+
+  #user-dropdown.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #user-dropdown a.dropdown-item {
+    display: block;
+    padding: 14px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14.5px;
+    transition: background 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  #user-dropdown a.dropdown-item:last-child {
+    border-bottom: none;
+  }
+
+  #user-dropdown a.dropdown-item:hover {
+    background: #f0f8ff;
+    color: #0b7db0;
+  }
+
+  #user-dropdown a.dropdown-item i {
+    width: 22px;
+    text-align: center;
+    margin-right: 12px;
+    color: #0b7db0;
+    font-size: 15px;
+  }
+
+  /* MOBILE RESPONSIVE — USER ICON LANG ANG NAKIKITA */
+  @media (max-width: 520px) {
+    nav ul {
+      gap: 0 !important;
+      justify-content: space-between;
+    }
+
+    /* Itago lahat ng nav links maliban sa user icon */
+    nav ul li:not(#user-menu-item) {
+      display: none !important;
+    }
+
+    /* Ipapakita lang ang user icon sa right side */
+    #user-menu-item {
+      margin-left: auto;
+      margin-right: 8px;
+    }
+
+    #user-icon-link {
+      padding: 10px;
+      font-size: 16px;
+      gap: 6px;
+    }
+
+    #user-name-display {
+      font-size: 13px;
+      max-width: 90px;
+    }
+
+    /* Adjust dropdown sa mobile */
+    #user-dropdown {
+      right: -20px;
+      min-width: 210px;
+    }
+  }
+</style>
+
+<!-- HEADER WITH USER MENU (FINAL VERSION) -->
+<header>
+  <div class="container topbar">
+    <div class="brand">
+      <img src="/mnt/data/Pelagic (1).jpg" alt="Pelagic logo" 
+           style="height:36px;border-radius:4px;object-fit:cover;">
+      <div>
+        <strong>Pelagic</strong>
+        <div class="small">Beach Resort</div>
+      </div>
+    </div>
+
     <nav>
-      <h1>Jesha Mae Talan</h1>
       <ul>
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="about.html">About Me</a></li>
-        <li><a href="photos.html.html">Photos</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#rooms">Rooms &amp; Cottages</a></li>
+        <li><a href="#contact">Contact</a></li>
+
+        <!-- USER ICON + DROPDOWN (LUMALABAS NA SA LAHAT NG DEVICE!) -->
+        <li id="user-menu-item">
+          <a href="#" id="user-icon-link">
+            <i class="fas fa-user-circle" style="font-size:22px;color:#0b7db0;"></i>
+            <span id="user-name-display">Guest</span>
+            <i class="fas fa-chevron-down" style="font-size:12px;color:#888;transition:transform 0.2s;"></i>
+          </a>
+
+          <div id="user-dropdown">
+            <a href="profile.html" class="dropdown-item">
+              <i class="fas fa-user"></i> My Profile
+            </a>
+            <a href="profile.html" class="dropdown-item">
+              <i class="fas fa-calendar-check"></i> My Bookings
+            </a>
+            <hr style="margin:8px 0;border:none;border-top:1px solid #eee;">
+            <a href="#" id="menu-logout" class="dropdown-item" style="display:none;color:#e74c3c;">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            <a href="#" id="menu-login" class="dropdown-item">
+              <i class="fas fa-sign-in-alt"></i> Sign In / Register
+            </a>
+          </div>
+        </li>
       </ul>
     </nav>
-  </header>
+  </div>
+</header>
 
-  <section class="hero">
-    Welcome to my portfolio!
-  </section>
+<!-- JavaScript para buksan ang dropdown (idagdag sa homepage.js o dito mismo) -->
+<script>
+  // Toggle dropdown kapag clinick ang user icon
+  document.getElementById('user-icon-link')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    const dropdown = document.getElementById('user-dropdown');
+    const chevron = this.querySelector('.fa-chevron-down');
+    
+    dropdown.classList.toggle('show');
+    chevron.style.transform = dropdown.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+  });
 
-  <section>
-    <h2>Welcome!</h2>
-    <p>Hi, I'm Jesha!
-Welcome to my personal website. I'm passionate about photography and editing. I love writing, reading, learning, and sharing what I know. Here, you'll find more about me and my interest in life. Thanks for visiting!</p>
-    <button onclick="buttonTapAnimation(this)">Explore More</button>
-  </section>
+  // Isara ang dropdown kapag clinick sa labas
+  document.addEventListener('click', function(e) {
+    if (!document.getElementById('user-menu-item').contains(e.target)) {
+      document.getElementById('user-dropdown')?.classList.remove('show');
+      document.querySelector('#user-icon-link .fa-chevron-down')?.style.removeProperty('transform');
+    }
+  });
+</script>
 
-  <footer>
-    © 2025 Jesha Mae Talan
+  <main>
+    <section class="hero">
+      <img src="/mnt/data/Pelagic (1).jpg" alt="hero">
+      <div class="overlay container">
+        <h1>Welcome to Pelagic Beach Resort</h1>
+        <p class="lead">Where your staycation's worth spending.</p>
+      </div>
+    </section>
+
+    <section id="about" class="container">
+      <div class="about">
+        <div>
+          <h2>About Pelagic Beach Resort</h2>
+          <p class="lead-text">Welcome to Pelagic Beach Resort, your serene seaside retreat tucked away in Pagkilatan, Batangas City. With its picturesque coastline and laid-back ambiance, Pelagic offers the perfect getaway for families, friends, or couples wanting to escape the hustle and bustle.</p>
+
+          <h2 style="margin-top:18px">What We Offer</h2>
+          <ul class="small" style="padding-left:18px">
+            <li>Spacious swimming pools perfect for families</li>
+            <li>Basketball court for group activities and team building</li>
+            <li>Beachfront access and scenic views</li>
+            <li>Comfortable cottages &amp; well-maintained rooms</li>
+          </ul>
+        </div>
+
+        <aside class="features">
+          <h3 style="margin:0 0 6px">Why Choose Pelagic</h3>
+          <div class="feature-list">
+            <div class="feat">Natural Beauty<br><small class="small">Relaxing beach and calm waters</small></div>
+            <div class="feat">Accessibility<br><small class="small">Conveniently located for nearby travelers</small></div>
+            <div class="feat">Versatility<br><small class="small">Great for weekend retreats and family vacations</small></div>
+            <div class="feat">Warm Hospitality<br><small class="small">Friendly staff to make your stay comfortable</small></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="rooms" class="container">
+      <h2>Rooms</h2>
+      <p class="small">Comfortable accommodations — pick from our various rooms, villas and cottages.</p>
+
+      <div class="cards" style="margin-top:18px">
+        <!-- sample cards; repeating the same image as placeholder -->
+        <article class="card">
+          <img src="/mnt/data/Pelagic (1).jpg" alt="room 1">
+          <h3>Room 1 (10 pax)</h3>
+          <div class="small">Free entrance · Fan · Pool access</div>
+          <div style="margin-top:8px"><span class="price">₱ 3,000</span> / Day</div>
+          <div style="margin-top:10px"><a class="btn" href="#">Book Now</a></div>
+        </article>
+
+        <article class="card">
+          <img src="/mnt/data/Pelagic (1).jpg" alt="room 2">
+          <h3>Room 2 (2 pax)</h3>
+          <div class="small">Fan · Aircon option · Pool</div>
+          <div style="margin-top:8px"><span class="price">₱ 1,200</span> / Day</div>
+          <div style="margin-top:10px"><a class="btn" href="#">Book Now</a></div>
+        </article>
+
+        <article class="card">
+          <img src="/mnt/data/Pelagic (1).jpg" alt="villa 1">
+          <h3>Villa 1</h3>
+          <div class="small">Private villa · 4 pax</div>
+          <div style="margin-top:8px"><span class="price">₱ 4,000</span> / Day</div>
+          <div style="margin-top:10px"><a class="btn" href="#">Book Now</a></div>
+        </article>
+
+        <article class="card">
+          <img src="/mnt/data/Pelagic (1).jpg" alt="family room">
+          <h3>Family Room (8 pax)</h3>
+          <div class="small">Beach access · 2 bedrooms</div>
+          <div style="margin-top:8px"><span class="price">₱ 5,000</span> / Day</div>
+          <div style="margin-top:10px"><a class="btn" href="#">Book Now</a></div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="container" style="padding-bottom:60px">
+      <h2>Cottages</h2>
+      <div class="cards" style="margin-top:18px">
+        <!-- cottages grid, small cards -->
+        <article class="card">
+          <img src="/mnt/data/Pelagic (1).jpg" alt="cottage">
+          <h3>Gray Cottage</h3>
+          <div class="small">Pool · Beach access</div>
+          <div style="margin-top:8px"><span class="price">₱ 1,200</span> / Day</div>
+          <div style="margin-top:10px"><a class="btn" href="#">Book</a></div>
+        </article>
+        <article class="card">
+          <img src="/mnt/data/Pelagic (1).jpg" alt="cottage">
+          <h3>Yellow Cottage</h3>
+          <div class="small">Pool · Beach access</div>
+          <div style="margin-top:8px"><span class="price">₱ 1,200</span> / Day</div>
+          <div style="margin-top:10px"><a class="btn" href="#">Book</a></div>
+        </article>
+        <article class="card">
+          <img src="/mnt/data/Pelagic (1).jpg" alt="cottage">
+          <h3>Red Cottage</h3>
+          <div class="small">Pool · Beach access</div>
+          <div style="margin-top:8px"><span class="price">₱ 1,200</span> / Day</div>
+          <div style="margin-top:10px"><a class="btn" href="#">Book</a></div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="contact">
+    <div class="container contact-grid">
+      <div>
+        <h3>Contact Us &amp; Share Your Feedback</h3>
+        <p class="small">Address: Sto Nino, Brgy. Pagkilatan, Batangas City<br>Phone: 0917-XXX-XXXX<br>Email: pelagicresort@email.com</p>
+      </div>
+      <div class="features">
+        <form>
+          <label class="small">Comments</label>
+          <textarea placeholder="Leave your feedback" style="width:100%;height:110px;border-radius:6px;border:1px solid #e6e6e9;padding:8px;margin-top:6px"></textarea>
+          <div style="margin-top:10px"><button class="btn" type="button">Submit</button></div>
+        </form>
+      </div>
+    </div>
+
+    <div class="container" style="text-align:center;margin-top:20px;padding-bottom:26px;color:var(--muted);font-size:13px">© 2021 Pelagic Beach Resort. All rights reserved.</div>
   </footer>
 
-  <!-- Decorative Floating Elements -->
-  <div class="decor cloud"></div>
-  <div class="decor sun"></div>
-  <div class="decor heart"></div>
-  <div class="decor butterfly"></div>
-  <div class="decor flower"></div>
-  <div class="decor shape"></div>
-  <div class="decor star"></div>
-
-  <script>
-    function buttonTapAnimation(button) {
-      button.classList.add('active');
-      setTimeout(() => button.classList.remove('active'), 300);
-    }
-  </script>
+  <script type="module" src="/homepage.js"></script>
 </body>
 </html>

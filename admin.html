@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - Pelagic Beach Resort</title>
+  <link rel="stylesheet" href="/admin.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* Minimal helper styles so 'hidden' behaves as expected */
+    .hidden { display: none !important; }
+    .sidebar a.active { background: #e6f0ff; }
+    .main-content { padding: 20px; min-height: 100vh; overflow: auto; background: #f8fafc; }
+    .auth-container { display:flex; align-items:center; justify-content:center; min-height:100vh; background:#f1f5f9; }
+    .auth-card { background:#fff; padding:28px; border-radius:8px; width:360px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="login-view" class="auth-container">
+    <div class="auth-card">
+      <h2>Pelagic Admin</h2>
+      <p class="muted">Staff Access Only</p>
+      <div style="margin-top:12px;">
+        <input id="admin-email" type="email" placeholder="admin@pelagic.com" style="width:100%;padding:10px;margin-bottom:8px;border:1px solid #ddd;border-radius:6px" />
+        <input id="admin-pass" type="password" placeholder="Enter password" style="width:100%;padding:10px;margin-bottom:12px;border:1px solid #ddd;border-radius:6px" />
+        <button id="admin-login-btn" style="width:100%;padding:10px;background:#1d4ed8;color:#fff;border:none;border-radius:6px">Login as Admin</button>
+        <p id="error-msg" class="error" style="color:#ef4444;margin-top:8px;height:18px"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULL DASHBOARD (hidden until login) -->
+  <div id="dashboard-view" class="hidden" style="display:flex;height:100vh">
+    <div class="sidebar" style="width:260px;background:#0f172a;color:#fff;padding:18px;box-sizing:border-box">
+      <div class="logo" style="font-weight:700;font-size:18px;margin-bottom:18px">Pelagic Admin</div>
+      <nav>
+        <ul style="list-style:none;padding:0;margin:0;display:block">
+          <li style="margin-bottom:6px"><a href="#" data-page="overview" class="active" style="display:block;padding:8px 10px;color:#fff;border-radius:6px;text-decoration:none"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li style="margin-bottom:6px"><a href="#" data-page="bookings" style="display:block;padding:8px 10px;color:#cbd5e1;border-radius:6px;text-decoration:none"><i class="fas fa-calendar-check"></i> Bookings</a></li>
+          <li style="margin-bottom:6px"><a href="#" data-page="rooms" style="display:block;padding:8px 10px;color:#cbd5e1;border-radius:6px;text-decoration:none"><i class="fas fa-bed"></i> Rooms Management</a></li>
+          <li style="margin-top:18px"><a href="#" id="logout-link" style="display:block;padding:8px 10px;color:#fecaca;border-radius:6px;text-decoration:none"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="main-content" style="flex:1;overflow:auto;">
+      <!-- NOTE: every page is inside main-content and has id "<name>-page" -->
+
+      <!-- OVERVIEW PAGE -->
+      <section id="overview-page" class="overview-grid">
+
+        <!-- PAGE TITLE -->
+        <h2 class="page-title">📊 Dashboard Overview</h2>
+
+
+        <!-- ============================
+             TOP STAT CARDS
+        ============================== -->
+        <div class="stats-row">
+
+            <div class="stat-card">
+                <h3>Total Bookings</h3>
+                <p id="stat-total-bookings" class="stat-value">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Completed</h3>
+                <p id="stat-completed" class="stat-value green">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Pending</h3>
+                <p id="stat-pending" class="stat-value orange">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Cancelled</h3>
+                <p id="stat-cancelled" class="stat-value red">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Users</h3>
+                <p id="stat-users" class="stat-value">0</p>
+            </div>
+
+        </div>
+
+
+        <!-- ============================
+             MONTHLY BOOKINGS CHART
+        ============================== -->
+        <h3 class="analytics-title">📅 Monthly Bookings</h3>
+        <div class="analytics-box">
+            <canvas id="chart-monthly"></canvas>
+        </div>
+
+
+        <!-- ============================
+             YEARLY TRENDS CHART
+        ============================== -->
+        <h3 class="analytics-title">📈 Yearly Booking Trends</h3>
+        <div class="analytics-box">
+            <canvas id="chart-yearly"></canvas>
+        </div>
+
+
+        <!-- ============================
+             WEEKLY ACTIVITY CHART
+        ============================== -->
+        <h3 class="analytics-title">🗓 Weekly Activity</h3>
+        <div class="analytics-box">
+            <canvas id="chart-weekly"></canvas>
+        </div>
+
+    </section>
+
+      <!-- BOOKINGS PAGE (moved inside main-content) -->
+      <section id="bookings-page" class="card hidden">
+        <h3>Bookings</h3>
+
+        <div class="bookings-controls" style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+            <input type="text" id="booking-search" placeholder="Search by guest, email, booking ID..." style="flex:1;padding:8px;border-radius:6px;border:1px solid #ddd;" />
+
+            <select id="filter-status" style="padding:8px;border-radius:6px;border:1px solid #ddd;">
+                <option value="">All statuses</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="declined">Declined</option>
+                <option value="checked_in">Checked In</option>
+                <option value="checked_out">Checked Out</option>
+            </select>
+
+            <select id="filter-room" style="padding:8px;border-radius:6px;border:1px solid #ddd;">
+                <option value="">All room types</option>
+                <option>Standard Cabana</option>
+                <option>Ocean View Suite</option>
+                <option>Private Villa</option>
+            </select>
+
+            <button id="refresh-bookings" class="small-btn" style="padding:8px;border-radius:6px">Refresh</button>
+        </div>
+
+        <div class="table-wrap" style="overflow:auto;">
+            <table class="inventory-table bookings-table" style="width:100%;min-width:900px;border-collapse:collapse">
+                <thead>
+                    <tr style="text-align:left;border-bottom:1px solid #e6eef8">
+                        <th style="padding:8px">Booking ID</th>
+                        <th style="padding:8px">Guest</th>
+                        <th style="padding:8px">Room</th>
+                        <th style="padding:8px">Check-in</th>
+                        <th style="padding:8px">Check-out</th>
+                        <th style="padding:8px">Nights</th>
+                        <th style="padding:8px">Total</th>
+                        <th style="padding:8px">Status</th>
+                        <th style="padding:8px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="bookings-tbody">
+                    <!-- rows rendered by booking script -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Booking modal -->
+        <div id="booking-modal" class="hidden" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.5);z-index:9999;">
+          <div style="background:#fff;padding:20px;border-radius:8px;max-width:880px;width:95%;box-shadow:0 8px 30px rgba(0,0,0,0.2);">
+            <button id="close-booking-modal" style="float:right;">✕</button>
+            <h3 id="modal-booking-id">Booking</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;">
+              <div>
+                <p><strong>Guest:</strong> <span id="modal-guest"></span></p>
+                <p><strong>Email:</strong> <span id="modal-email"></span></p>
+                <p><strong>Phone:</strong> <span id="modal-phone"></span></p>
+                <p><strong>Room:</strong> <span id="modal-room"></span></p>
+              </div>
+              <div>
+                <p><strong>Check-in:</strong> <span id="modal-checkin"></span></p>
+                <p><strong>Check-out:</strong> <span id="modal-checkout"></span></p>
+                <p><strong>Total:</strong> <span id="modal-total"></span></p>
+                <p><strong>Status:</strong> <span id="modal-status"></span></p>
+                <p><strong>Created:</strong> <span id="modal-created"></span></p>
+              </div>
+            </div>
+
+            <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+                <button id="btn-approve" class="small-btn">Approve</button>
+                <button id="btn-decline" class="small-btn danger">Decline</button>
+                <button id="btn-edit-dates" class="small-btn">Edit Dates</button>
+                <button id="btn-delete" class="small-btn danger">Delete Booking</button>
+            </div>
+
+            <div id="edit-dates-area" class="hidden" style="margin-top:12px;">
+                <label>Check-in <input type="datetime-local" id="edit-checkin" /></label>
+                <label>Check-out <input type="datetime-local" id="edit-checkout" /></label>
+                <div style="margin-top:8px;">
+                    <button id="save-dates" class="small-btn">Save Dates</button>
+                    <button id="cancel-edit-dates" class="small-btn">Cancel</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<section id="rooms-page" class="card">
+    <h3>Room Management</h3>
+
+    <div class="rooms-grid">
+
+        <!-- Add/Edit Form -->
+        <form id="room-form" class="room-form">
+            <h4>Add or Edit Room</h4>
+
+            <input type="hidden" id="room-id">
+
+            <div class="form-group">
+                <label>Room Name</label>
+                <input type="text" id="room-name" placeholder="ex: Ocean View Suite" required>
+            </div>
+
+            <div class="form-group">
+                <label>Price</label>
+                <input type="number" id="room-rate" placeholder="10000" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label>Description (Optional)</label>
+                <textarea id="room-desc" rows="3" placeholder="Luxury suite with ocean view..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">
+                <span id="save-text">Save Room</span>
+            </button>
+        </form>
+
+        <!-- Rooms List -->
+        <div class="rooms-table-card">
+            <h4>Available Rooms</h4>
+            <table class="rooms-table">
+                <thead>
+                    <tr>
+                        <th>Room Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="rooms-table-body">
+                    <!-- JS will fill this -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+    </div><!-- end main-content -->
+  </div><!-- end dashboard-view -->
+
+  <!-- scripts -->
+  <script type="module" src="/admin.js"></script>
+  <!-- your bookings admin script (optional) — keep if you have admin bookings logic -->
+  <script type="module" src="/booking.js"></script>
+  <script type="module" src="/dashboard.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="/rooms.js"></script>
+</body>
+</html>

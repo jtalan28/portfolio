@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pelagic Beach Resort | Online Booking</title>
+    <link rel="stylesheet" href="client.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+    <div class="container">
+        <h1>Pelagic Beach Resort</h1>
+
+<!-- Login Form -->
+<div id="login-form">
+    <h2>Welcome Back</h2>
+
+    <form id="login-form-data">
+        <div class="form-group">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" required placeholder="you@example.com" />
+        </div>
+
+        <div class="form-group password-group">
+            <label for="login-pass">Password</label>
+            <input type="password" id="login-pass" required placeholder="Enter password" />
+            <span class="eye-toggle" id="toggle-login-pass"><i class="fas fa-eye"></i></span>
+        </div>
+
+        <div class="form-options">
+            <label><input type="checkbox" id="remember-me"> Remember me</label>
+            <a href="#" id="forgot-pass" class="switch-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" id="login-btn">Log In</button>
+    </form>
+
+    <!-- ⭐ MOVE THIS OUTSIDE THE FORM ⭐ -->
+    <button type="button" id="admin-login-btn" class="admin-btn">Login as Admin</button>
+
+    <div class="switch-link" id="show-register">New here? Create an account</div>
+</div>
+
+<!-- Register Form — SUPER CLEAN & ALWAYS WORKING (2025 Edition) -->
+<div id="register-form" class="hidden">
+    <h2>Create Your Account</h2>
+    <p class="subtitle">Join us and book your perfect stay</p>
+
+    <form id="register-form-data" novalidate autocomplete="off">
+        
+        <!-- Full Name -->
+        <div class="form-group">
+            <label for="reg-name">Full Name</label>
+            <input 
+                type="text" 
+                id="reg-name" 
+                placeholder="Enter your full name" 
+                autocomplete="name"
+            />
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="reg-email">Email Address</label>
+            <input 
+                type="email" 
+                id="reg-email" 
+                placeholder="you@example.com" 
+                autocomplete="email"
+            />
+        </div>
+
+        <!-- Phone (optional) -->
+        <div class="form-group">
+            <label for="reg-phone">Phone Number <span class="optional">(optional)</span></label>
+            <input
+                type="tel"
+                id="reg-phone"
+                placeholder="+63 912 345 6789"
+                autocomplete="tel"
+            />
+        </div>
+
+        <!-- Password -->
+        <div class="form-group password-group">
+            <label for="reg-pass">Password</label>
+            <div class="password-wrapper">
+                <input 
+                    type="password" 
+                    id="reg-pass" 
+                    placeholder="At least 6 characters" 
+                    minlength="6"
+                    autocomplete="new-password"
+                />
+                <span class="eye-toggle">
+                    <i class="fas fa-eye"></i>
+                    <i class="fas fa-eye-slash hidden"></i>
+                </span>
+            </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group password-group">
+            <label for="reg-conf">Confirm Password</label>
+            <div class="password-wrapper">
+                <input 
+                    type="password" 
+                    id="reg-conf" 
+                    placeholder="Type your password again" 
+                    autocomplete="new-password"
+                />
+                <span class="eye-toggle">
+                    <i class="fas fa-eye"></i>
+                    <i class="fas fa-eye-slash hidden"></i>
+                </span>
+            </div>
+        </div>
+
+        <!-- Submit Button — Guaranteed Clickable! -->
+        <button type="submit" id="register-btn" class="btn-primary">
+            <span class="btn-text">Create Account</span>
+            <span class="btn-loading hidden">
+                <i class="fas fa-spinner fa-spin"></i> Creating Account...
+            </span>
+        </button>
+    </form>
+
+    <!-- Back to Login -->
+    <div class="switch-link" id="show-login">
+        Already have an account? <strong>Log in here</strong>
+    </div>
+</div>
+
+    <!-- Booking Dashboard -->
+<div id="booking-dashboard" class="hidden">
+    <h2 id="welcome-msg">Welcome!</h2>
+
+    <!-- BOOKING FORM -->
+    <form id="booking-form-data">
+        <div class="form-group">
+            <label for="room-type">Room Type</label>
+            <select id="room-type">
+                <option value="100">Standard Cabana ($100/room)</option>
+                <option value="250">Ocean View Suite ($250/room)</option>
+                <option value="500">Private Villa ($500/room)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Check-in</label>
+            <input type="datetime-local" id="checkin" required />
+        </div>
+
+        <div class="form-group">
+            <label>Check-out</label>
+            <input type="datetime-local" id="checkout" required />
+        </div>
+
+        <div class="price-display" id="total-display">Total: ₱0</div><br>
+
+        <button type="button" id="confirm-booking-btn">Confirm Booking</button>
+        <div class="switch-link" id="logout-link">Log Out</div>
+    </form>
+</div>
+
+   <!-- USER BOOKING STATUS (now scrollable & beautiful) -->
+<div id="booking-status-section" class="hidden">
+  <div class="status-header">
+    <h3>Your Recent Bookings</h3>
+    <button id="refresh-status-btn" class="btn-small">
+      Refresh
+    </button>
+  </div>
+
+  <!-- Scrollable List Container -->
+  <div id="booking-status-list" class="booking-status-list">
+    <!-- Items will be injected here by JS -->
+    <div class="status-empty">No bookings yet.</div>
+  </div>
+
+  <!-- Optional: fallback single card (hidden if list exists) -->
+  <div id="booking-status-card" class="status-card hidden">
+    <p><strong>Status:</strong> <span id="status-label">Loading...</span></p>
+    <p><strong>Room:</strong> <span id="status-room"></span></p>
+    <p><strong>Check-in:</strong> <span id="status-in"></span></p>
+    <p><strong>Check-out:</strong> <span id="status-out"></span></p>
+    <p><strong>Total:</strong> <span id="status-total"></span></p>
+  </div>
+</div>
+
+
+    <script type="module" src="/index.js"></script>
+</body>
+</html>
